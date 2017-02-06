@@ -1,13 +1,13 @@
 ﻿namespace InputDeviceEventManager.Keyboard
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using Base;
+    using Win32;
 
-    internal class KeyboardListener : BaseDisposableClassWithFinalizer
-    { 
+    internal class KeyboardListener : BaseListener
+    {
+        public KeyboardListener()
+            :base(HookId.WH_KEYBOARD_LL)
+        {
+        }
     }
 }

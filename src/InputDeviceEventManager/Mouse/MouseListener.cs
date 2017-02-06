@@ -1,13 +1,13 @@
 ﻿namespace InputDeviceEventManager.Mouse
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using Base;
+    using Win32;
 
-    internal class MouseListener : BaseDisposableClassWithFinalizer
+    internal class MouseListener : BaseListener
     {
+        public MouseListener()
+              : base(HookId.WH_MOUSE_LL)
+        {
+        }
     }
 }

@@ -42,10 +42,15 @@
   <ItemGroup>
     <Compile Include="Base\BaseDisposableClass.cs" />
     <Compile Include="Base\BaseDisposableClassWithFinalizer.cs" />
+    <Compile Include="Base\BaseListener.cs" />
     <Compile Include="DeviceListener.cs" />
     <Compile Include="Keyboard\KeyboardListener.cs" />
+    <Compile Include="Win32\HookId.cs" />
     <Compile Include="Mouse\MouseListener.cs" />
+    <Compile Include="Mouse\Point.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Win32\HookNativeMethods.cs" />
+    <Compile Include="Win32\HookProc.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

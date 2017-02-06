@@ -11,14 +11,15 @@
 
     public class DeviceListener : BaseDisposableClass
     {
+        private HookEventManager hookEventManager;
         private MouseListener mouseListener;
         private KeyboardListener keyboardListener;
 
-
         public void StartListen()
         {
-            this.mouseListener = new MouseListener();
-            this.keyboardListener = new KeyboardListener();
+            this.hookEventManager = new HookEventManager();
+            this.mouseListener = new MouseListener(this.hookEventManager);
+            this.keyboardListener = new KeyboardListener(this.hookEventManager);
         }
 
         public void StopListen()
