@@ -45,6 +45,7 @@
     <Compile Include="Base\BaseListener.cs" />
     <Compile Include="DeviceListener.cs" />
     <Compile Include="Keyboard\KeyboardListener.cs" />
+    <Compile Include="Win32\HookHandle.cs" />
     <Compile Include="Win32\HookId.cs" />
     <Compile Include="Mouse\MouseListener.cs" />
     <Compile Include="Mouse\Point.cs" />

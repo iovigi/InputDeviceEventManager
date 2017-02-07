@@ -11,15 +11,13 @@
 
     public class DeviceListener : BaseDisposableClass
     {
-        private HookEventManager hookEventManager;
         private MouseListener mouseListener;
         private KeyboardListener keyboardListener;
 
         public void StartListen()
         {
-            this.hookEventManager = new HookEventManager();
-            this.mouseListener = new MouseListener(this.hookEventManager);
-            this.keyboardListener = new KeyboardListener(this.hookEventManager);
+            //this.mouseListener = new MouseListener();
+            this.keyboardListener = new KeyboardListener();
         }
 
         public void StopListen()
@@ -33,6 +31,17 @@
             {
                 this.keyboardListener = null;
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(disposing)
+            {
+                this.mouseListener.Dispose();
+                this.keyboardListener.Dispose();
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

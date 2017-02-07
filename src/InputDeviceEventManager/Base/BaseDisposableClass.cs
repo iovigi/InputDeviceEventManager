@@ -4,12 +4,7 @@
 
     public class BaseDisposableClass : IDisposable
     {
-        private bool disposed = false;
-
-        ~BaseDisposableClass()
-        {
-            this.Dispose(false);
-        }
+        protected bool disposed = false;
 
         public void Dispose()
         {

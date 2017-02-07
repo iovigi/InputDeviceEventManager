@@ -2,5 +2,5 @@
 {
     using System;
 
-    public delegate int HookProc(int nCode, IntPtr wParam, IntPtr lParam);
+    public delegate IntPtr HookProc(int nCode, IntPtr wParam, IntPtr lParam);
 }

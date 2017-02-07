@@ -16,9 +16,8 @@
         /// <param name="threadId">Type: DWORD. The identifier of the thread with which the hook procedure is to be associated.For desktop apps, if this parameter is zero, the hook procedure is associated with all existing threads running in the same desktop as the calling thread.For Windows Store apps, see the Remarks section.</param>
         /// <returns>Type: HHOOK. If the function succeeds, the return value is the handle to the hook procedure. If the function fails, the return value is NULL.To get extended error information, call GetLastError.</returns>
         //<remarks>https://msdn.microsoft.com/en-us/library/windows/desktop/ms644990(v=vs.85).aspx</remarks>
-        [DllImport(USER_32_DLL, CharSet = CharSet.Auto,
-         CallingConvention = CallingConvention.StdCall)]
-        public static extern int SetWindowsHookEx(int idHook, HookProc lpfn,
+        [DllImport(USER_32_DLL, CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern HookHandle SetWindowsHookEx(int idHook, HookProc lpfn,
         IntPtr hInstance, int threadId);
 
         /// <summary>
@@ -27,9 +26,8 @@
         /// <param name="idHook">Type: HHOOK. A handle to the hook to be removed.This parameter is a hook handle obtained by a previous call to SetWindowsHookEx.</param>
         /// <returns>Type: BOOL. If the function succeeds, the return value is nonzero.If the function fails, the return value is zero.To get extended error information, call GetLastError.</returns>
         /// <remarks>https://msdn.microsoft.com/en-us/library/windows/desktop/ms644993(v=vs.85).aspx</remarks>
-        [DllImport(USER_32_DLL, CharSet = CharSet.Auto,
-         CallingConvention = CallingConvention.StdCall)]
-        public static extern bool UnhookWindowsHookEx(int idHook);
+        [DllImport(USER_32_DLL, CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern bool UnhookWindowsHookEx(IntPtr idHook);
 
         /// <summary>
         /// Passes the hook information to the next hook procedure in the current hook chain. A hook procedure can call this function either before or after processing the hook information. 
@@ -40,9 +38,13 @@
         /// <param name="lParam">Type: LPARAM.The lParam value passed to the current hook procedure.The meaning of this parameter depends on the type of hook associated with the current hook chain.</param>
         /// <returns>Type: LRESULT. This value is returned by the next hook procedure in the chain.The current hook procedure must also return this value.The meaning of the return value depends on the hook type. For more information, see the descriptions of the individual hook procedures.</returns>
         /// <remarks>https://msdn.microsoft.com/en-us/library/windows/desktop/ms644974(v=vs.85).aspx</remarks>
-        [DllImport(USER_32_DLL, CharSet = CharSet.Auto,
-         CallingConvention = CallingConvention.StdCall)]
-        public static extern int CallNextHookEx(int idHook, int nCode,
+        [DllImport(USER_32_DLL, CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern IntPtr CallNextHookEx(int idHook, int nCode,
         IntPtr wParam, IntPtr lParam);
+
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+
+        public static extern IntPtr GetModuleHandle(string lpModuleName);
     }
 }

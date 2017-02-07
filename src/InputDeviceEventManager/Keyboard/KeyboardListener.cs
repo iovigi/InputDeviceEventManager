@@ -1,5 +1,6 @@
 ﻿namespace InputDeviceEventManager.Keyboard
 {
+    using System;
     using Base;
     using Win32;
 
@@ -8,6 +9,11 @@
         public KeyboardListener()
             :base(HookId.WH_KEYBOARD_LL)
         {
+        }
+
+        protected override IntPtr HookTempleteMethod(int nCode, IntPtr wParam, IntPtr lParam)
+        {
+            return HookNativeMethods.CallNextHookEx((int)HookId.WH_KEYBOARD_LL, nCode, wParam, lParam);
         }
     }
 }

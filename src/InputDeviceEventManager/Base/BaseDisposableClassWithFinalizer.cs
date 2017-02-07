@@ -4,7 +4,7 @@
 
     internal class BaseDisposableClassWithFinalizer : IDisposable
     {
-        private bool disposed = false;
+        protected bool disposed = false;
 
         public void Dispose()
         {
