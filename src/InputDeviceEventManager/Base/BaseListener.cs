@@ -16,10 +16,8 @@
             this.hookId = hookId;
             var source = HookNativeMethods.GetModuleHandle(Process.GetCurrentProcess().MainModule.ModuleName);
 
-            this.hookHandle = HookNativeMethods.SetWindowsHookEx((int)this.hookId, (x,y,z)=> {
-                Console.WriteLine(x.ToString());
-                return HookNativeMethods.CallNextHookEx((int)hookId, x, y, z);
-            }, source,
+            this.hookHandle = HookNativeMethods.SetWindowsHookEx((int)this.hookId, HookTrigger
+            , source,
                0);
 
             if (this.hookHandle.IsInvalid)
@@ -29,20 +27,16 @@
             }
         }
 
-        private IntPtr HookTrigger(int nCode, IntPtr wParam, IntPtr lParam)
-        {
-            return HookNativeMethods.CallNextHookEx((int)hookId, nCode, wParam, lParam);
-        }
-
-        protected abstract IntPtr HookTempleteMethod(int nCode, IntPtr wParam, IntPtr lParam);
+        protected abstract IntPtr HookTrigger(int nCode, IntPtr wParam, IntPtr lParam);
 
         protected override void Dispose(bool disposing)
         {
             if (disposed)
             {
-                this.hookHandle.Dispose();
                 return;
             }
+
+            hookHandle.Dispose();
 
             base.Dispose(disposing);
         }

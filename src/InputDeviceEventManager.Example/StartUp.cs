@@ -3,34 +3,16 @@
     using System;
     using System.Threading;
     using System.Threading.Tasks;
+    using System.Windows.Forms;
     using InputDeviceEventManager;
-    using System.Windows;
-
 
     public class StartUp
     {
         public static void Main(string[] args)
         {
-            Thread thread = new Thread(Module);
-            thread.Start();
-
-
-            while (true)
-            {
-
-                Console.ReadLine();
-            }
-        }
-
-        private static void Module()
-        {
-            DeviceListener deviceListener = new DeviceListener();
+            DeviceListener deviceListener = new DeviceListener(true);
             deviceListener.StartListen();
-
-            while (true)
-            {
-                Console.ReadLine();
-            }
+            deviceListener.StopListen();
         }
     }
 }

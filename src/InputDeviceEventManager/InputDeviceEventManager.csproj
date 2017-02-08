@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,8 +44,11 @@
     <Compile Include="Base\BaseDisposableClass.cs" />
     <Compile Include="Base\BaseDisposableClassWithFinalizer.cs" />
     <Compile Include="Base\BaseListener.cs" />
+    <Compile Include="MessageLoop\IMessageLoop.cs" />
+    <Compile Include="MessageLoop\WindowsFormsMessageLoop.cs" />
     <Compile Include="DeviceListener.cs" />
     <Compile Include="Keyboard\KeyboardListener.cs" />
+    <Compile Include="Mouse\MouseMessageData.cs" />
     <Compile Include="Win32\HookHandle.cs" />
     <Compile Include="Win32\HookId.cs" />
     <Compile Include="Mouse\MouseListener.cs" />
