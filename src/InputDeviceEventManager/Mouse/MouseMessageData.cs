@@ -1,18 +1,17 @@
 ﻿namespace InputDeviceEventManager.Mouse
 {
-    using System;
     using System.Runtime.InteropServices;
 
     [StructLayout(LayoutKind.Explicit)]
     public class MouseMessageData
     {
-        [FieldOffset(0x00)]
+        [FieldOffset(0)]
         public Point Point;
 
-        [FieldOffset(0x0A)]
+        [FieldOffset(10)]
         public short MouseData;
 
-        [FieldOffset(0x10)]
+        [FieldOffset(16)]
         public int Timestamp;
     }
 }

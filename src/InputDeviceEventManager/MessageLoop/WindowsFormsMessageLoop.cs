@@ -1,19 +1,20 @@
 ﻿namespace InputDeviceEventManager.MessageLoop
 {
-    using System.Threading;
     using System.Windows.Forms;
     using Base;
 
     internal class WindowsFormsMessageLoop : BaseDisposableClass, IMessageLoop
     {
-        private Thread worker;
+        private ApplicationContext applicationContext;
 
         public bool IsRunning { get; private set; }
 
         public void Start()
         {
-            this.worker = new Thread(this.Work);
-            this.worker.Start();
+            this.IsRunning = true;
+            this.applicationContext = new ApplicationContext();
+
+            Application.Run(this.applicationContext);
         }
 
         public void Stop()
@@ -25,29 +26,21 @@
 
             try
             {
-                Application.Exit();
+                if (this.applicationContext != null)
+                {
+                    this.applicationContext.ExitThread();
+                }
             }
             catch
             { }
 
-            if (this.worker != null && !this.worker.Join(1000))
-            {
-                this.worker.Abort();
-                this.worker = null;
-            }
-
+            this.applicationContext = null;
             this.IsRunning = false;
-        }
-
-        private void Work()
-        {
-            this.IsRunning = true;
-            Application.Run();
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposed)
+            if (this.disposed)
             {
                 return;
             }

@@ -1,12 +1,6 @@
 ﻿namespace InputDeviceEventManager
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading;
-    using System.Threading.Tasks;
-    using System.Windows.Forms;
     using Base;
     using Mouse;
     using Keyboard;
@@ -14,40 +8,323 @@
 
     public class DeviceListener : BaseDisposableClass
     {
+        private readonly object syncRoot = new object();
+
+        private Thread worker;
+
         private IMessageLoop messageLoop;
         private MouseListener mouseListener;
         private KeyboardListener keyboardListener;
 
-        /// <summary>
-        /// Creating device listener
-        /// </summary>
-        /// <param name="manageOwnMessageLoop">If this parameter is true, device listener will start own message loop and it can do big problem, if application have own message loop. If this parameter is false, device listener message loop of the application. This flag need to be true, if application doesn't have own message loop.</param>
-        public DeviceListener(bool manageOwnMessageLoop = false)
+        public DeviceListener()
         {
-            this.ManageOwnMessageLoop = manageOwnMessageLoop;
+            //TODO:Create native message loop.
+            this.messageLoop = new WindowsFormsMessageLoop();
+        }
 
-            if (this.ManageOwnMessageLoop)
+        public event MouseEventDeledate MouseLeftButtonDown
+        {
+            add
             {
-                //TODO:create native message loop.
-                this.messageLoop = new WindowsFormsMessageLoop();
+                var mouseListener = this.mouseListener;
+
+                if (mouseListener != null)
+                {
+                    mouseListener.LeftButtonDown += value;
+                }
+            }
+            remove
+            {
+                var mouseListener = this.mouseListener;
+
+                if (mouseListener != null)
+                {
+                    mouseListener.LeftButtonDown -= value;
+                }
             }
         }
 
-        public bool ManageOwnMessageLoop { get; private set; }
+        public event MouseEventDeledate MouseLeftButtonUp
+        {
+            add
+            {
+                var mouseListener = this.mouseListener;
+
+                if (mouseListener != null)
+                {
+                    mouseListener.LeftButtonUp += value;
+                }
+            }
+            remove
+            {
+                var mouseListener = this.mouseListener;
+
+                if (mouseListener != null)
+                {
+                    mouseListener.LeftButtonUp -= value;
+                }
+            }
+        }
+
+        public event MouseEventDeledate MouseMove
+        {
+            add
+            {
+                var mouseListener = this.mouseListener;
+
+                if (mouseListener != null)
+                {
+                    mouseListener.Move += value;
+                }
+            }
+            remove
+            {
+                var mouseListener = this.mouseListener;
+
+                if (mouseListener != null)
+                {
+                    mouseListener.Move -= value;
+                }
+            }
+        }
+
+        public event MouseEventDeledate MouseWheelRotate
+        {
+            add
+            {
+                var mouseListener = this.mouseListener;
+
+                if (mouseListener != null)
+                {
+                    mouseListener.WheelRotate += value;
+                }
+            }
+            remove
+            {
+                var mouseListener = this.mouseListener;
+
+                if (mouseListener != null)
+                {
+                    mouseListener.WheelRotate -= value;
+                }
+            }
+        }
+
+        public event MouseEventDeledate MouseHorizontalWheelRotate
+        {
+            add
+            {
+                var mouseListener = this.mouseListener;
+
+                if (mouseListener != null)
+                {
+                    mouseListener.HorizontalWheelRotate += value;
+                }
+            }
+            remove
+            {
+                var mouseListener = this.mouseListener;
+
+                if (mouseListener != null)
+                {
+                    mouseListener.HorizontalWheelRotate -= value;
+                }
+            }
+        }
+
+        public event MouseEventDeledate MouseRightButtonDown
+        {
+            add
+            {
+                var mouseListener = this.mouseListener;
+
+                if (mouseListener != null)
+                {
+                    mouseListener.RightButtonDown += value;
+                }
+            }
+            remove
+            {
+                var mouseListener = this.mouseListener;
+
+                if (mouseListener != null)
+                {
+                    mouseListener.RightButtonDown -= value;
+                }
+            }
+        }
+
+        public event MouseEventDeledate MouseRightButtonUp
+        {
+            add
+            {
+                var mouseListener = this.mouseListener;
+
+                if (mouseListener != null)
+                {
+                    mouseListener.RightButtonUp += value;
+                }
+            }
+            remove
+            {
+                var mouseListener = this.mouseListener;
+
+                if (mouseListener != null)
+                {
+                    mouseListener.RightButtonUp -= value;
+                }
+            }
+        }
+
+        public event MouseEventDeledate MouseAction
+        {
+            add
+            {
+                var mouseListener = this.mouseListener;
+
+                if (mouseListener != null)
+                {
+                    mouseListener.Action += value;
+                }
+            }
+            remove
+            {
+                var mouseListener = this.mouseListener;
+
+                if (mouseListener != null)
+                {
+                    mouseListener.Action -= value;
+                }
+            }
+        }
+
+        public event KeyboardEventDeledate KeyboardKeyDown
+        {
+            add
+            {
+                var keyboardListener = this.keyboardListener;
+
+                if (keyboardListener != null)
+                {
+                    keyboardListener.KeyDown += value;
+                }
+            }
+            remove
+            {
+                var keyboardListener = this.keyboardListener;
+
+                if (keyboardListener != null)
+                {
+                    keyboardListener.KeyDown -= value;
+                }
+            }
+        }
+
+        public event KeyboardEventDeledate KeyboardKeyUp
+        {
+            add
+            {
+                var keyboardListener = this.keyboardListener;
+
+                if (keyboardListener != null)
+                {
+                    keyboardListener.KeyUp += value;
+                }
+            }
+            remove
+            {
+                var keyboardListener = this.keyboardListener;
+
+                if (keyboardListener != null)
+                {
+                    keyboardListener.KeyUp -= value;
+                }
+            }
+        }
+
+        public event KeyboardEventDeledate KeyboardSystemKeyDown
+        {
+            add
+            {
+                var keyboardListener = this.keyboardListener;
+
+                if (keyboardListener != null)
+                {
+                    keyboardListener.SystemKeyDown += value;
+                }
+            }
+            remove
+            {
+                var keyboardListener = this.keyboardListener;
+
+                if (keyboardListener != null)
+                {
+                    keyboardListener.SystemKeyDown -= value;
+                }
+            }
+        }
+
+        public event KeyboardEventDeledate KeyboardSystemKeyUp
+        {
+            add
+            {
+                var keyboardListener = this.keyboardListener;
+
+                if (keyboardListener != null)
+                {
+                    keyboardListener.SystemKeyUp += value;
+                }
+            }
+            remove
+            {
+                var keyboardListener = this.keyboardListener;
+
+                if (keyboardListener != null)
+                {
+                    keyboardListener.SystemKeyUp -= value;
+                }
+            }
+        }
+
+        public event KeyboardEventDeledate KeyboardAction
+        {
+            add
+            {
+                var keyboardListener = this.keyboardListener;
+
+                if (keyboardListener != null)
+                {
+                    keyboardListener.Action += value;
+                }
+            }
+            remove
+            {
+                var keyboardListener = this.keyboardListener;
+
+                if (keyboardListener != null)
+                {
+                    keyboardListener.Action -= value;
+                }
+            }
+        }
 
         public void StartListen()
         {
-            if(this.ManageOwnMessageLoop)
-            {
-                this.messageLoop.Start();
-            }
+            this.worker = new Thread(() =>
+           {
+               this.mouseListener = new MouseListener();
+               this.keyboardListener = new KeyboardListener();
 
-            this.mouseListener = new MouseListener();
-            this.keyboardListener = new KeyboardListener();
+               this.messageLoop.Start();
+           });
+
+            worker.Start();
         }
 
         public void StopListen()
         {
+            this.messageLoop.Stop();
+
             if (this.mouseListener != null)
             {
                 this.mouseListener = null;
@@ -58,9 +335,17 @@
                 this.keyboardListener = null;
             }
 
-            if (this.ManageOwnMessageLoop && this.messageLoop.IsRunning)
+            const int timeOfWaitingToStop = 1000;//1 second
+
+            if (this.worker != null && !this.worker.Join(timeOfWaitingToStop))
             {
-                this.messageLoop.Stop();
+                try
+                {
+                    this.worker.Abort();
+                    this.worker = null;
+                }
+                catch
+                { }
             }
         }
 

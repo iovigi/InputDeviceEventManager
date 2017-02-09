@@ -16,15 +16,18 @@
             this.hookId = hookId;
             var source = HookNativeMethods.GetModuleHandle(Process.GetCurrentProcess().MainModule.ModuleName);
 
-            this.hookHandle = HookNativeMethods.SetWindowsHookEx((int)this.hookId, HookTrigger
-            , source,
-               0);
+            this.hookHandle = HookNativeMethods.SetWindowsHookEx((int)this.hookId, this.Hook, source, 0);
 
             if (this.hookHandle.IsInvalid)
             {
                 var errorCode = Marshal.GetLastWin32Error();
                 throw new Win32Exception(errorCode);
             }
+        }
+
+        private IntPtr Hook(int nCode, IntPtr wParam, IntPtr lParam)
+        {
+            return this.HookTrigger(nCode, wParam, lParam);
         }
 
         protected abstract IntPtr HookTrigger(int nCode, IntPtr wParam, IntPtr lParam);
