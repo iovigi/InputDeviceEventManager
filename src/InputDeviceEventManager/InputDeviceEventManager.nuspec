@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>InputDeviceEventManager</id>
+    <version>1.0.1</version>
+    <title>InputDeviceEventManager</title>
+    <authors>Iliya Nedelchev</authors>
+    <owners>Iliya Nedelchev</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Description:Input device event manager is library for management of the events of input device(mouse and keyboard).</description>
+	<licenseUrl>https://githubusercontent.com/iovigi/InputDeviceEventManager/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/iovigi/InputDeviceEventManager</projectUrl>
+    <copyright>Copyright ©  2017</copyright>
+    <dependencies />
+  </metadata>
+</package>
