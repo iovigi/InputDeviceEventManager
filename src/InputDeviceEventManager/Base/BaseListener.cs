@@ -9,14 +9,27 @@
     internal abstract class BaseListener : BaseDisposableClassWithFinalizer
     {
         private readonly HookId hookId;
-        private readonly HookHandle hookHandle;
+
+        private HookHandle hookHandle;
 
         public BaseListener(HookId hookId)
         {
             this.hookId = hookId;
+        }
+
+        public bool IsHook
+        {
+            get
+            {
+                return this.hookHandle != null && !this.hookHandle.IsClosed;
+            }
+        }
+
+        public void Hook()
+        {
             var source = HookNativeMethods.GetModuleHandle(Process.GetCurrentProcess().MainModule.ModuleName);
 
-            this.hookHandle = HookNativeMethods.SetWindowsHookEx((int)this.hookId, this.Hook, source, 0);
+            this.hookHandle = HookNativeMethods.SetWindowsHookEx((int)this.hookId, this.OnHookCall, source, 0);
 
             if (this.hookHandle.IsInvalid)
             {
@@ -25,7 +38,17 @@
             }
         }
 
-        private IntPtr Hook(int nCode, IntPtr wParam, IntPtr lParam)
+        public void UnHook()
+        {
+            if (this.hookHandle != null)
+            {
+                this.hookHandle.Close();
+            }
+
+            this.hookHandle = null;
+        }
+
+        private IntPtr OnHookCall(int nCode, IntPtr wParam, IntPtr lParam)
         {
             return this.HookTrigger(nCode, wParam, lParam);
         }
@@ -39,7 +62,10 @@
                 return;
             }
 
-            hookHandle.Dispose();
+            if (disposing)
+            {
+                this.UnHook();
+            }
 
             base.Dispose(disposing);
         }

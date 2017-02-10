@@ -13,12 +13,13 @@
         private Thread worker;
 
         private IMessageLoop messageLoop;
-        private MouseListener mouseListener;
         private KeyboardListener keyboardListener;
+        private MouseListener mouseListener;
 
         public DeviceListener()
         {
-            //TODO:Create native message loop.
+            this.keyboardListener = new KeyboardListener();
+            this.mouseListener = new MouseListener();
             this.messageLoop = new WindowsFormsMessageLoop();
         }
 
@@ -312,8 +313,8 @@
         {
             this.worker = new Thread(() =>
            {
-               this.mouseListener = new MouseListener();
-               this.keyboardListener = new KeyboardListener();
+               this.keyboardListener.Hook();
+               this.mouseListener.Hook();
 
                this.messageLoop.Start();
            });
@@ -324,16 +325,6 @@
         public void StopListen()
         {
             this.messageLoop.Stop();
-
-            if (this.mouseListener != null)
-            {
-                this.mouseListener = null;
-            }
-
-            if (this.keyboardListener != null)
-            {
-                this.keyboardListener = null;
-            }
 
             const int timeOfWaitingToStop = 1000;//1 second
 
@@ -347,6 +338,9 @@
                 catch
                 { }
             }
+
+            this.mouseListener.UnHook();
+            this.keyboardListener.UnHook();
         }
 
         protected override void Dispose(bool disposing)
