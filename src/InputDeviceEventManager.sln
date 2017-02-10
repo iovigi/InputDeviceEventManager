@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InputDeviceEventManager", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InputDeviceEventManager.Example", "InputDeviceEventManager.Example\InputDeviceEventManager.Example.csproj", "{721A3F99-28D9-45F4-8994-80AD116D9BC5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InputDeviceEventManager.WPF", "InputDeviceEventManager.WPF\InputDeviceEventManager.WPF.csproj", "{1AE08BD3-0AAA-4D5F-8AD4-CB3417490B74}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{721A3F99-28D9-45F4-8994-80AD116D9BC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{721A3F99-28D9-45F4-8994-80AD116D9BC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{721A3F99-28D9-45F4-8994-80AD116D9BC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AE08BD3-0AAA-4D5F-8AD4-CB3417490B74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AE08BD3-0AAA-4D5F-8AD4-CB3417490B74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AE08BD3-0AAA-4D5F-8AD4-CB3417490B74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AE08BD3-0AAA-4D5F-8AD4-CB3417490B74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
